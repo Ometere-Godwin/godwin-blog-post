@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { format } from 'date-fns';
-import { Post, postsApi } from '@/lib/api';
-import { useToast } from '@/components/ui/use-toast';
-import { Avatar } from '@/components/ui/avatar';
-import { User } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { format } from "date-fns";
+import { Post, postsApi } from "@/lib/api";
+import { useToast } from "@/components/ui/use-toast";
+import { Avatar } from "@/components/ui/avatar";
+import { User } from "lucide-react";
 
 export function PostList() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -44,13 +44,13 @@ export function PostList() {
       {posts.map((post) => (
         <article key={post.id} className="bg-white shadow rounded-lg p-6">
           <div className="flex items-center space-x-3 mb-4">
-            <Avatar className="h-10 w-10 bg-gray-200">
+            <Avatar className="h-10 w-10 bg-gray-200 flex items-center justify-center">
               <User className="h-6 w-6 text-gray-500" />
             </Avatar>
             <div>
               <h3 className="font-medium text-gray-900">{post.author}</h3>
               <p className="text-sm text-gray-500">
-                {format(new Date(post.created_at), 'PPP')}
+                {format(new Date(post.created_at), "PPP")}
               </p>
             </div>
           </div>

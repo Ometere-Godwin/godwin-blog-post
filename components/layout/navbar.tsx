@@ -1,12 +1,12 @@
 "use client";
 
-import Link from 'next/link';
-import { useAuthStore } from '@/store/auth-store';
-import { Button } from '@/components/ui/button';
-import { authApi } from '@/lib/api';
-import { useToast } from '@/components/ui/use-toast';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import Link from "next/link";
+import { useAuthStore } from "@/store/auth-store";
+import { Button } from "@/components/ui/button";
+import { authApi } from "@/lib/api";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function Navbar() {
   const { isAuthenticated, logout: logoutStore } = useAuthStore();
@@ -16,7 +16,7 @@ export function Navbar() {
 
   const handleLogout = async () => {
     if (isLoggingOut) return;
-    
+
     try {
       setIsLoggingOut(true);
       await authApi.logout();
@@ -25,7 +25,7 @@ export function Navbar() {
         title: "Success",
         description: "You have been logged out successfully.",
       });
-      router.push('/login');
+      router.push("/login");
     } catch (error) {
       // Even if the API call fails, we'll log out locally
       logoutStore();
@@ -33,7 +33,7 @@ export function Navbar() {
         title: "Notice",
         description: "You have been logged out.",
       });
-      router.push('/login');
+      router.push("/login");
     } finally {
       setIsLoggingOut(false);
     }
@@ -45,7 +45,7 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold">Blog</span>
+              <span className="text-xl font-bold">Gdowin Blog Post</span>
             </Link>
           </div>
 
@@ -58,8 +58,8 @@ export function Navbar() {
                 <Link href="/create">
                   <Button variant="ghost">Create Post</Button>
                 </Link>
-                <Button 
-                  onClick={handleLogout} 
+                <Button
+                  onClick={handleLogout}
                   variant="ghost"
                   disabled={isLoggingOut}
                 >

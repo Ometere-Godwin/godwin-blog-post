@@ -1,24 +1,26 @@
 "use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/components/ui/use-toast';
-import { postsApi } from '@/lib/api';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { postsApi } from "@/lib/api";
 
 const postSchema = z.object({
   title: z.string().min(1),
   content: z.string().min(1),
+  author: z.string().min(2),
 });
 
 export function CreatePostForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const [submittedAuthor, setSubmittedAuthor] = useState<string | null>(null);
 
   const {
     register,
@@ -33,6 +35,7 @@ export function CreatePostForm() {
     try {
       setIsLoading(true);
       await postsApi.createPost(data);
+      setSubmittedAuthor(data.author); // Store the submitted author name
       toast({
         title: "Success",
         description: "Post created successfully.",
@@ -53,20 +56,23 @@ export function CreatePostForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-2">
         <Label htmlFor="title">Title</Label>
-        <Input
-          id="title"
-          {...register('title')}
-          disabled={isLoading}
-        />
+        <Input id="title" {...register("title")} disabled={isLoading} />
         {errors.title && (
           <p className="text-sm text-red-500">{errors.title.message}</p>
+        )}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="author">Written By</Label>
+        <Input id="author" {...register("author")} disabled={isLoading} />
+        {errors.author && (
+          <p className="text-sm text-red-500">{errors.author.message}</p>
         )}
       </div>
       <div className="space-y-2">
         <Label htmlFor="content">Content</Label>
         <Textarea
           id="content"
-          {...register('content')}
+          {...register("content")}
           disabled={isLoading}
           rows={6}
         />
@@ -77,6 +83,9 @@ export function CreatePostForm() {
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? "Creating..." : "Create Post"}
       </Button>
+      {submittedAuthor && (
+        <p className="mt-4 text-lg">Post created by: {submittedAuthor}</p> // Display the author's name
+      )}
     </form>
   );
 }
