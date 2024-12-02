@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/components/ui/use-toast';
-import { authApi } from '@/lib/api';
-import { useAuthStore } from '@/store/auth-store';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
+import { authApi } from "@/lib/api";
+import { useAuthStore } from "@/store/auth-store";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -41,7 +41,7 @@ export function LoginForm() {
         title: "Success",
         description: "You have been logged in successfully.",
       });
-      router.push('/dashboard');
+      router.push("/dashboard");
     } catch (error) {
       toast({
         title: "Error",
@@ -60,7 +60,7 @@ export function LoginForm() {
         <Input
           id="email"
           type="email"
-          {...register('email')}
+          {...register("email")}
           disabled={isLoading}
         />
         {errors.email && (
@@ -72,7 +72,7 @@ export function LoginForm() {
         <Input
           id="password"
           type="password"
-          {...register('password')}
+          {...register("password")}
           disabled={isLoading}
         />
         {errors.password && (
@@ -83,7 +83,7 @@ export function LoginForm() {
         {isLoading ? "Logging in..." : "Login"}
       </Button>
       <p className="text-center text-sm text-gray-600">
-        Don't have an account?{' '}
+        Don&apos;t have an account?{" "}
         <Link href="/register" className="text-blue-600 hover:underline">
           Register here
         </Link>
